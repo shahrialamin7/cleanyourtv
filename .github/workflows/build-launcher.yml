@@ -2,6 +2,10 @@ name: Build launcher APK
 
 on:
   workflow_dispatch:
+    inputs:
+      application_id:
+        description: "launcherApplicationId (package name)"
+        default: "com.gathin.tvhome"
   push:
     branches: [main]
     paths:
@@ -36,7 +40,8 @@ jobs:
         working-directory: launcher
         run: |
           chmod +x gradlew
-          ./gradlew assembleRelease --no-daemon --console=plain
+          ./gradlew assembleRelease --no-daemon --console=plain \
+            -PlauncherApplicationId="${{ inputs.application_id || 'com.gathin.tvhome' }}"
 
       - name: "Check the APK"
         run: |
@@ -54,7 +59,7 @@ jobs:
       - name: "Publish release"
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: launcher-3.1-${{ github.run_number }}
+          tag_name: launcher-3.1-${{ github.run_number }}-${{ github.run_attempt }}
           name: "Home Launcher 3.1 build ${{ github.run_number }}"
           files: launcher/app/build/outputs/apk/release/app-release.apk
-          body: "Built from ${{ github.sha }} on ${{ github.ref_name }}."
+          body: "Built from ${{ github.sha }}; applicationId `${{ inputs.application_id || 'com.gathin.tvhome' }}`."
