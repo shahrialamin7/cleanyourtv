@@ -63,6 +63,7 @@ final class RecentApps {
             "com.android.packageinstaller",
             "com.android.tv",
             "com.google.android.tv",
+            "com.google.android.tvlauncher",
             "com.google.android.gms",
             "com.google.android.gsf",
             "com.google.android.packageinstaller",
