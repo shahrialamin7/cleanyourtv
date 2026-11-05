@@ -12,7 +12,8 @@ Inputs: D-pad remote **and touch**, both first-class.
 - [x] Theme push no longer deletes on-TV choices; Follow theme does.
 - [x] Merge unit tests.
 - [x] ADR, roadmap and settings plan.
-- [ ] Signed release workflow in GitHub Actions.
+- [x] Signed release workflow in GitHub Actions (keystore secrets configured; back up
+      `~/.config/home-launcher/signing/CREDENTIALS.txt` offline).
 - [ ] CI green on the branch.
 
 Exit: a stored preference survives a theme push; tests and lint pass; an APK is downloadable from

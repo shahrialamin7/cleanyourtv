@@ -53,6 +53,9 @@ Specific choices:
 - `Config` stays the single source of defaults; the schema does not duplicate `config.xml` values.
 - The app remains Java/Views, so no Kotlin stdlib or Compose runtime is added to the APK.
 - A signed release key must be backed up outside GitHub; losing it means uninstall/reinstall on the TV.
+  The key lives in `~/.config/home-launcher/signing/` on the build host for now. The first
+  release-signed install must replace the current debug-signed app (different signature), so one
+  uninstall is expected; every later upgrade keeps its data.
 
 ## Alternatives considered
 

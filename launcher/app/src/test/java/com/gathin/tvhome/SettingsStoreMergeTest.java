@@ -21,7 +21,7 @@ public class SettingsStoreMergeTest {
     }
 
     @Test
-    public void themeStaysWhenNothingIsOverridden() {
+    public void themeStaysWhenNothingIsOverridden() throws Exception {
         JSONObject theme = new JSONObject().put("columns", 6);
         assertSame(theme, SettingsStore.merge(theme, new JSONObject()));
         assertSame(theme, SettingsStore.merge(theme, null));
