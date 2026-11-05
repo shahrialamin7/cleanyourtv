@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">হোম</string>
+    <string name="app_name">হোম লঞ্চার</string>
     <string name="inputs">ইনপুট</string>
     <string name="wifi">ওয়াই-ফাই</string>
     <string name="settings">সেটিংস</string>
@@ -99,4 +99,7 @@
     </plurals>
     <string name="greeting_with_name">%1$s, %2$s</string>
     <string name="game_live">এখন সরাসরি</string>
+    <string name="clock_format_system">সিস্টেম</string>
+    <string name="clock_format_12">১২ ঘণ্টা</string>
+    <string name="clock_format_24">২৪ ঘণ্টা</string>
 </resources>

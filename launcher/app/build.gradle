@@ -6,13 +6,35 @@ android {
     namespace 'com.gathin.tvhome'
     compileSdk 34
 
+    // CI sets these for release builds. The defaults match the upstream source tree.
+    def releaseStore = System.getenv('TVHOME_KEYSTORE')
+    def releaseStorePassword = System.getenv('TVHOME_STORE_PASSWORD')
+    def releaseKeyAlias = System.getenv('TVHOME_KEY_ALIAS')
+    def releaseKeyPassword = System.getenv('TVHOME_KEY_PASSWORD')
+    def hasReleaseKey = releaseStore && releaseStorePassword && releaseKeyAlias && releaseKeyPassword
+
     defaultConfig {
-        // Opt-in identity for firmware with a package-name HOME allowlist; see docs/devices/xiaomi-mitv-aetp0-dofus.md.
+        // Opt-in identity for firmware with a package-name HOME allowlist.
+        // Xiaomi: docs/devices/xiaomi-mitv-aetp0-dofus.md (com.ts.launcher).
+        // ColorOS TV: docs/devices/oppo-k9-55-oppocnm632.md (com.oneplus.tv.launcher2).
         applicationId providers.gradleProperty('launcherApplicationId').getOrElse('com.gathin.tvhome')
         minSdk 26
         targetSdk 34
-        versionCode 10
-        versionName '3.1'
+        versionCode providers.gradleProperty('launcherVersionCode').getOrElse('12').toInteger()
+        versionName providers.gradleProperty('launcherVersionName').getOrElse('3.3')
+    }
+
+    signingConfigs {
+        if (hasReleaseKey) {
+            release {
+                storeFile file(releaseStore)
+                storePassword releaseStorePassword
+                keyAlias releaseKeyAlias
+                keyPassword releaseKeyPassword
+                // A small PKCS#12 file is easier to create without keytool and works with apksigner.
+                storeType System.getenv('TVHOME_STORE_TYPE') ?: 'PKCS12'
+            }
+        }
     }
 
     buildTypes {
@@ -21,8 +43,9 @@ android {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            // Sideloaded over ADB, never published: sign with the debug key so it installs over a debug build.
-            signingConfig signingConfigs.debug
+            // With a CI keystore the release is upgradeable from any earlier signed build. Without
+            // one this is a test APK and is labelled debug-signed; the release workflow says so.
+            signingConfig hasReleaseKey ? signingConfigs.release : signingConfigs.debug
         }
     }
 
@@ -45,4 +68,6 @@ dependencies {
     implementation 'androidx.dynamicanimation:dynamicanimation:1.0.0'
     // Test only (never in the APK): plain JVM tests for the module card validators, src/test.
     testImplementation 'junit:junit:4.13.2'
+    // Test only: the merge test runs on the JVM, where android.jar's org.json methods are stubs.
+    testImplementation 'org.json:json:20240303'
 }

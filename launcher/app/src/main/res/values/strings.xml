@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Home</string>
+    <string name="app_name">Home Launcher</string>
     <string name="inputs">Inputs</string>
     <string name="wifi">Wi-Fi</string>
     <string name="settings">Settings</string>
@@ -18,6 +18,7 @@
     <string name="good_night">Good night</string>
     <string name="festival_dussehra_greeting">Happy Dussehra</string>
     <string name="festival_diwali_greeting">Happy Diwali</string>
+    <string name="festival_halloween_greeting">Happy Halloween</string>
     <string name="ethernet">Ethernet</string>
     <string name="offline">Offline</string>
     <string name="not_available">Not available on this TV</string>
@@ -64,7 +65,7 @@
     <string name="open_on_start_state">Open on start: %1$s</string>
     <string name="advanced_effects_warning">Adds a lifted tile, icon zoom and smooth colour transitions. May increase memory use; the actual difference depends on your TV.</string>
     <string name="follow_theme">Follow theme (reset on-TV choices)</string>
-    <string name="follow_theme_hint">Uses the current theme or built-in layout and motion settings. Pushing or resetting a theme also clears your on-TV choices.</string>
+    <string name="follow_theme_hint">Uses the current theme or built-in layout and motion settings. A theme push no longer clears your on-TV choices; this button does.</string>
     <string name="tv_settings">TV system settings</string>
     <string name="quick_picture">Display</string>
     <string name="quick_network">Network</string>
@@ -154,4 +155,7 @@
     <string name="last_opened">Last opened %1$s</string>
     <!-- game_day: a game on now, in the race panel. -->
     <string name="game_live">Live now</string>
+    <string name="clock_format_system">System</string>
+    <string name="clock_format_12">12-hour</string>
+    <string name="clock_format_24">24-hour</string>
 </resources>
