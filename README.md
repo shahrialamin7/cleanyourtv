@@ -295,6 +295,10 @@ Themes, switches and add-ons together, with screenshots: [cleanyour.tv/addons](h
 **More:** [docs/launcher.md](docs/launcher.md) has the launcher settings page row by row, changing the
 default home, the languages, remote keys, the Clock screensaver, navigation and building it yourself.
 
+**Design notes:** the settings-first fork is recorded in the
+[ADR](docs/adr/0001-settings-first-fork.md); the [roadmap](docs/plan/ROADMAP.md) and the
+[settings plan](docs/plan/SETTINGS.md) cover the grouped, remote-and-touch configuration work.
+
 ## Restoring your TV
 
 Keep the list you applied. One line puts the TV back the way it was:
