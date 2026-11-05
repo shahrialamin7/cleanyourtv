@@ -53,7 +53,7 @@ final class RecentAppsDialog {
     private TextView empty;
     private TextView clear;
     private TextView close;
-    private View root;
+    private FrameLayout root;
     private boolean closed;
 
     private RecentAppsDialog(Activity activity) {
