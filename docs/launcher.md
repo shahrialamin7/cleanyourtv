@@ -45,6 +45,10 @@ Click **Settings** for the TV's own settings. Hold OK on it for its menu:
 - **Edit dock**, with `dock_row`.
 - **Reorder apps**: OK picks an app up, the arrows move it, Back places it, and Back again finishes.
   With `tile_menu` (on by default since 3.3), holding OK on a tile offers **Move**, which picks that app up straight away.
+- **Recent apps**: a shelf of apps Home has seen, newest first. Hold OK on a card to remove it from the
+  list; **Clear all** asks Android to stop their background processes (best effort: some apps restart).
+  With Usage access granted it also sees apps opened outside Home. See
+  [the recents note](plan/RECENTS.md).
 - **Restart…** while `HomeKeyService` runs, which opens the system power menu (a launcher may not
   restart the TV itself).
 

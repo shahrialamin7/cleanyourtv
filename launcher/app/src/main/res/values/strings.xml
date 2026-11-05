@@ -119,6 +119,20 @@
     <string name="library_recent">New · Add to Home</string>
     <string name="library_hint_add">Press to add to Home · Hold for options</string>
     <string name="library_hint_open">Press to open · Hold for options</string>
+    <!-- Recent apps shelf. "Cleared" is best effort: Android may restart background services. -->
+    <string name="recent_apps">Recent apps</string>
+    <string name="recent_apps_title">Recent apps</string>
+    <string name="recent_apps_hint">Apps opened from Home, newest first.</string>
+    <string name="recent_apps_usage_hint">Allow usage access below to include apps opened outside Home.</string>
+    <string name="recent_apps_empty">Nothing here yet. Open an app from Home and it shows up.</string>
+    <string name="recent_apps_clear">Clear all</string>
+    <string name="recent_apps_cleared">Asked %1$d apps to stop</string>
+    <string name="recent_apps_cleared_none">Nothing to clear</string>
+    <string name="recent_apps_remove">Remove from recents</string>
+    <string name="recent_apps_removed">Removed from recents</string>
+    <string name="recent_apps_usage_access">Allow usage access</string>
+    <string name="recent_apps_close">Close</string>
+    <string name="recent_apps_clear_note">Android may restart some apps.</string>
     <plurals name="library_app_count">
         <item quantity="one">%1$d app</item>
         <item quantity="other">%1$d apps</item>

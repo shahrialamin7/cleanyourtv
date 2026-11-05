@@ -352,6 +352,8 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
     private int dockEditSlot = -1;
     /** Tile menu's "Add to dock": the app waiting for a dock place in edit-dock mode, or null. */
     private String dockEditAppKey;
+    /** launch_actions from config/theme, kept for the Recent apps shelf so it opens an app the same way a tile does. */
+    private Map<String, String> launchActions = Collections.emptyMap();
     private AppLibraryDialog appLibrary;
     private boolean appLibrarySelection;
     private boolean libraryOkOpens;
@@ -843,6 +845,7 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
             libraryFromTopBar = true;   // closing it goes back to this button, not to the pill after the last row
         });
         btnLibraryTop.setVisibility(cfg.libraryButton && cfg.appLibrary ? View.VISIBLE : View.GONE);
+        launchActions = cfg.launchActions;
         addTopBarApps(cfg.topBarApps, cfg.launchActions);
         iconOnlyButtons = cfg.iconOnlyButtons;
         topMenu = cfg.topMenu;
@@ -3290,7 +3293,23 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
         }
     }
 
+    /** Opens a Recent apps entry through the same launch_actions path a tile uses. */
+    boolean openRecent(String pkg) {
+        if (pkg == null || pkg.isEmpty()) return false;
+        PackageManager pm = getPackageManager();
+        Intent launch = pm.getLeanbackLaunchIntentForPackage(pkg);
+        if (launch == null) launch = pm.getLaunchIntentForPackage(pkg);
+        if (launch == null) return false;
+        launch = LaunchActions.select(pkg, launchActions, launch, (targetPackage, action) -> {
+            Intent custom = LaunchActions.intent(targetPackage, action);
+            return pm.resolveActivity(custom, 0) != null ? custom : null;
+        });
+        open(launch);
+        return true;
+    }
+
     private void open(Intent i) {
+        RecentApps.record(this, i);
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         try {
             startActivity(i);
@@ -3707,6 +3726,7 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
         }
         if (moduleCards) addSettingsMenuRow(rows, popup, R.string.module_cards, this::showModuleCards);
         if (dockRow) addSettingsMenuRow(rows, popup, R.string.dock_edit, this::startDockEdit);
+        addSettingsMenuRow(rows, popup, R.string.recent_apps, () -> RecentAppsDialog.show(this));
         addSettingsMenuRow(rows, popup, R.string.reorder, this::toggleReorder);
         // A launcher may not restart the TV itself; the Home key helper can open the system power menu instead.
         if (HomeKeyService.canOpenPowerMenu()) addSettingsMenuRow(rows, popup, R.string.power_menu, HomeKeyService::openPowerMenu);

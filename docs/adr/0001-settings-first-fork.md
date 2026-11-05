@@ -32,7 +32,7 @@ Specific choices:
 | Area | Decision | Why |
 |---|---|---|
 | Base | `Gathin23/cleanyourtv` `main`, forked to `shahrialamin7/cleanyourtv` | keeps the safety layer, vendor fixes, themes, addons and 31 locales |
-| Identity | app label **Home Launcher**; `launcherApplicationId` stays a Gradle property, default `com.gathin.tvhome.atv` on the owner's TV | no package rename across 119 Java files; no collision with an installed CleanYourTV |
+| Identity | app label **Home Launcher**; `launcherApplicationId` stays a Gradle property, default `tv.homelauncher.app` for the owner's release (neutral, no personal name) and `com.gathin.tvhome` for upstream-compatible CI builds | no package rename across 119 Java files; `tv.<domain>.<product>` is a valid reverse-DNS form (Twitch ships `tv.twitch.android.app`); a new applicationId is a new install identity, so the first neutral build needs one uninstall of the old package |
 | Compatibility | 100% theme JSON and module-card compatibility | 21 themes and 32 addons keep working |
 | Language/UI | Java + Android Views, no Compose, no third-party runtime dependency; **D-pad and touch are both first-class** | 1.5 GB / weak GPU target; the same APK must work on a TV remote, a touch TV and a tablet |
 | Settings storage | `SharedPreferences` (`SettingsStore`), typed, versioned | no new dependency, survives process death, already backed up by Android |
@@ -48,6 +48,10 @@ Specific choices:
 
 - Existing users keep their choices across theme pushes. This is an intentional behaviour change and
   is called out in the release notes; **Follow theme** is the escape hatch.
+- The neutral package is a new install identity. Tooling accepts
+  `TVHOME_PACKAGE=tv.homelauncher.app` (for example `tools/theme.sh` and
+  `launcher/build-and-install.sh`); upstream device notes still show `com.gathin.tvhome` because
+  that is the default build they document.
 - The settings UI can grow one page at a time without touching `Config` again: all overlay keys go
   through the same merge.
 - `Config` stays the single source of defaults; the schema does not duplicate `config.xml` values.

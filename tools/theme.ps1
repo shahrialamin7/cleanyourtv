@@ -46,7 +46,8 @@ if (-not (Test-Path $py)) {
     [Console]::Error.WriteLine('run: python -m venv tools\venv; tools\venv\Scripts\python.exe -m pip install -r tools\requirements.txt. Nothing was sent to the TV.')
     exit 2
 }
-$pkg = 'com.gathin.tvhome'
+$pkg = if ($env:TVHOME_PACKAGE) { $env:TVHOME_PACKAGE } else { 'com.gathin.tvhome' }
+$env:TVHOME_PACKAGE = $pkg
 # Runs tools\tv.py or b64push.py and stops on a non-zero exit: 'Stop' only covers cmdlets, so a failed
 # native call would otherwise fall through to "Theme ... is on the TV".
 function Invoke-Tv {

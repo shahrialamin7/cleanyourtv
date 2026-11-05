@@ -16,7 +16,7 @@ import shlex
 import sys
 import time
 
-PACKAGE = "com.gathin.tvhome"
+PACKAGE = os.environ.get("TVHOME_PACKAGE", "com.gathin.tvhome")
 SERVICES = "enabled_accessibility_services"
 FLAG = "accessibility_enabled"
 ACTION = "android.accessibilityservice.AccessibilityService"

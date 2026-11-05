@@ -329,6 +329,7 @@ class SourceCollisionTest(unittest.TestCase):
     def test_symlink_collisions(self):
         self.alias_collisions("symlink")
 
+    @unittest.skipUnless(hasattr(os, "link"), "hard links are unavailable in this Python (Android)")
     def test_hardlink_collisions(self):
         self.alias_collisions("hardlink")
 

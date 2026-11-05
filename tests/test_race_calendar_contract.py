@@ -72,7 +72,9 @@ def page_window(text):
 def config_keys(text):
     """What Config.raceCalendar() reads out of the file, as {theme, sessions, race, session}."""
     start = text.index("private static List<RaceWeekend.Race> raceCalendar(")
-    end = text.index("private static void rememberThemeSignature(", start)
+    markers = ("private static void rememberThemeSignature(",
+               "private static void syncThemeChoices(")
+    end = min(text.index(marker, start) for marker in markers if marker in text)
     body = text[start:end]
     theme = re.search(r'json\.optJSONArray\("([a-z_]+)"\)', body)
     sessions = re.search(r'r\.optJSONArray\("([a-z_]+)"\)', body)

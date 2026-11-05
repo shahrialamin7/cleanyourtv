@@ -480,6 +480,7 @@ class CollisionTest(unittest.TestCase):
         self.input_collisions(alias)
         self.output_collisions(alias)  # Includes two aliases for a destination not yet created.
 
+    @unittest.skipUnless(hasattr(os, "link"), "hard links are unavailable in this Python (Android)")
     def test_hardlink_collisions(self):
         def alias(directory, path):
             link = directory / "alias.png"

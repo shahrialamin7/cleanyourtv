@@ -148,6 +148,20 @@
     <string name="race_countdown_hours">%1$d שע׳ %2$d דק׳</string>
     <string name="race_countdown_days">%1$d ימ׳ %2$d שע׳</string>
     <string name="last_opened">פתיחה אחרונה: %1$s</string>
+    <!-- Recent apps (RecentAppsDialog). -->
+    <string name="recent_apps">אפליקציות אחרונות</string>
+    <string name="recent_apps_title">אפליקציות אחרונות</string>
+    <string name="recent_apps_hint">אפליקציות שנפתחו ממסך הבית, מהחדשה לישנה.</string>
+    <string name="recent_apps_usage_hint">אפשרו גישה לנתוני שימוש למטה כדי לכלול אפליקציות שנפתחו מחוץ למסך הבית.</string>
+    <string name="recent_apps_empty">אין כאן עדיין. אפליקציה שתיפתח ממסך הבית תופיע כאן.</string>
+    <string name="recent_apps_clear">נקה הכול</string>
+    <string name="recent_apps_cleared">נשלחה בקשה לעצור %1$d אפליקציות</string>
+    <string name="recent_apps_cleared_none">אין מה לנקות</string>
+    <string name="recent_apps_remove">הסר מהאחרונות</string>
+    <string name="recent_apps_removed">הוסר מהאחרונות</string>
+    <string name="recent_apps_usage_access">אפשר גישה לנתוני שימוש</string>
+    <string name="recent_apps_close">סגור</string>
+    <string name="recent_apps_clear_note">ייתכן שאנדרואיד תפעיל מחדש חלק מהאפליקציות.</string>
     <string name="game_live">בשידור חי עכשיו</string>
     <string name="clock_format_system">מערכת</string>
     <string name="clock_format_12">12 שעות</string>

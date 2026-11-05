@@ -9,6 +9,13 @@
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!-- Recent apps: ask the system to kill background processes when the user taps Clear all. Normal
+         permission, granted at install; foreground services can survive, which the UI says. -->
+    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
+    <!-- Recent apps: read apps that were opened outside Home. Special app-op, granted by the user in
+         Settings > Special access > Usage access; the shelf works from Home's own history without it. -->
+    <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS"
+        tools:ignore="ProtectedPermissions" />
     <!-- Needed since Android 10 to read the Wi-Fi network name for the network pill. Never requested at
          runtime: build-and-install grants it with pm grant, so lint's Android 12 "ask for COARSE with
          FINE" rule does not apply here. -->

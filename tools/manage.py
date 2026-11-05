@@ -51,7 +51,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 TOOLS = ROOT / "tools"
-LAUNCHER_PKG = "com.gathin.tvhome"
+LAUNCHER_PKG = os.environ.get("TVHOME_PACKAGE", "com.gathin.tvhome")
 
 
 # ---------------------------------------------------------------- reading the repo

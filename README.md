@@ -98,6 +98,7 @@ A home screen that looks like an Apple TV and gets out of the way:
 | **Three frosted buttons** | Inputs (HDMI ports under the names you gave them in the TV's settings, AV, Live TV), Wi-Fi or Ethernet with the network name, Settings. |
 | **A greeting, a thin clock and the date** | In [Outfit](https://fonts.google.com/specimen/Outfit), and a matching Clock screensaver. Set `show_stats` in config or a theme for one line under the clock: CPU, free memory and free storage. It stays off unless you turn it on, and it refreshes only while Home is on screen. |
 | **Themes and module cards** | Themes change colours, wallpaper, dock and columns without a rebuild, and module cards let other apps plug a tile in, only with your say-so. |
+| **Recent apps** | Hold OK on Settings for a shelf of apps Home has seen, newest first, with a best-effort **Clear all**; see [the limits](docs/plan/RECENTS.md). |
 
 And a TV that stops working against you: no sponsored rows, no "Discover" nags, no analytics
 phoning home, no apps you never asked for.
@@ -297,7 +298,8 @@ default home, the languages, remote keys, the Clock screensaver, navigation and 
 
 **Design notes:** the settings-first fork is recorded in the
 [ADR](docs/adr/0001-settings-first-fork.md); the [roadmap](docs/plan/ROADMAP.md) and the
-[settings plan](docs/plan/SETTINGS.md) cover the grouped, remote-and-touch configuration work.
+[settings plan](docs/plan/SETTINGS.md) cover the grouped, remote-and-touch configuration work, and
+the [recent apps note](docs/plan/RECENTS.md) records what background cleanup can and cannot do.
 
 ## Restoring your TV
 

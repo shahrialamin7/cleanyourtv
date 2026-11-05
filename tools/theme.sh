@@ -76,7 +76,10 @@ PY=venv/bin/python
 [ -x "$PY" ] || { echo "run: python3 -m venv tools/venv && tools/venv/bin/pip install -r tools/requirements.txt." \
   "Nothing was sent to the TV." >&2; exit 2; }
 export MSYS_NO_PATHCONV=1
-PKG=com.gathin.tvhome
+# The release APK uses a neutral applicationId; a checkout built with the upstream default still works.
+# Override for a release build: TVHOME_PACKAGE=tv.homelauncher.app tools/theme.sh <theme>
+PKG="${TVHOME_PACKAGE:-com.gathin.tvhome}"
+export TVHOME_PACKAGE="$PKG"
 DIR=/sdcard/Android/data/$PKG/files
 # A unique marker lets the launcher clear on-TV layout/motion choices after every theme push,
 # including a push of identical config.json bytes and --reset.

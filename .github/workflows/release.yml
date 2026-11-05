@@ -9,7 +9,7 @@ on:
     inputs:
       application_id:
         description: "launcherApplicationId (package name)"
-        default: "com.gathin.tvhome.atv"
+        default: "tv.homelauncher.app"
       version_code:
         description: "versionCode (integer, higher than the installed build)"
         default: "1000"
@@ -27,7 +27,7 @@ permissions:
   contents: write
 
 env:
-  APP_ID: ${{ inputs.application_id || 'com.gathin.tvhome.atv' }}
+  APP_ID: ${{ inputs.application_id || 'tv.homelauncher.app' }}
   VERSION_CODE: ${{ inputs.version_code || '1000' }}
   VERSION_NAME: ${{ inputs.version_name || '3.3-settings' }}
 
