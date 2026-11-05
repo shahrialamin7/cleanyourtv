@@ -542,9 +542,12 @@ final class Config {
         File dir = dir(ctx);
         File file = dir != null ? new File(dir, FILE_NAME) : null;
         boolean mounted = Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
-        JSONObject json = readOverlay(ctx, file, mounted);
+        JSONObject themeJson = readOverlay(ctx, file, mounted);
+        // Explicit on-TV choices outrank the theme. Merge them into the same overlay so every key
+        // below is applied once, with one precedence rule instead of a second block of reads.
+        JSONObject json = SettingsStore.merge(themeJson, SettingsStore.of(ctx).overridesJson());
         if (json != null) {
-            applied = true;
+            applied = themeJson != null;
             dock = stringList(json, "dock_apps", dock);
             fillDock = bool(json, "fill_dock", fillDock);
             hidden = stringList(json, "hidden_apps", hidden);
@@ -655,17 +658,10 @@ final class Config {
         }
         // A top-bar app is moved there, not copied: it leaves the grid.
         for (String pkg : topBarApps) if (!hidden.contains(pkg)) hidden.add(pkg);
-        // A theme push or reset invalidates choices made on the TV. On first use, remember the
-        // current theme without clearing choices from an older launcher version.
+        // On-TV choices were merged over the theme above, so a theme push changes only the keys the
+        // owner has not chosen. Remember this theme's signature for diagnostics and upgrades.
         SharedPreferences choices = ctx.getSharedPreferences(SETTINGS_NAME, Context.MODE_PRIVATE);
-        // Unmounted storage looks like a theme reset; compare only once the file is readable.
-        if (mounted) syncThemeChoices(choices, dir, file);
-        int chosenColumns = choices.getInt("columns", columns);
-        if (chosenColumns >= 4 && chosenColumns <= 7) columns = chosenColumns;
-        int chosenRows = choices.getInt(ROWS_BELOW_DOCK_KEY, rowsBelow);
-        if (chosenRows >= 0 && chosenRows <= 3) rowsBelow = chosenRows;
-        animations = choices.getBoolean("animations", animations);
-        advancedEffects = choices.getBoolean("advanced_effects", advancedEffects);
+        if (mounted) rememberThemeSignature(choices, dir, file);
         File wallpaper = dir != null ? new File(dir, WALLPAPER_NAME) : null;
         if (wallpaper != null && !(wallpaper.isFile() && wallpaper.length() > 0)) wallpaper = null;
         // A theme can also switch the wallpaper off while the file is still there.
@@ -674,8 +670,6 @@ final class Config {
         int rotationMinutes = json == null ? 0 : integer(json, "wallpaper_rotation_minutes", 0, 0, 1440);
         int wallpaperDim = json == null ? 0 : integer(json, "wallpaper_dim", 0, 0, 90);
         int dockOpacity = json == null ? 100 : integer(json, "dock_opacity", 100, 30, 100);
-        dockOpacity = chosenDockOpacity(choices.getInt(DOCK_OPACITY_KEY, -1), dockOpacity);
-        clockFormat = choices.getString(CLOCK_FORMAT_KEY, clockFormat);
         String wallpaperOrder = json == null ? WallpaperRotation.ORDER_SHUFFLE
                 : string(json, "wallpaper_order", WallpaperRotation.ORDER_SHUFFLE);
         // An unknown order must not silently change how an existing collection rotates.
@@ -748,23 +742,15 @@ final class Config {
         return races;
     }
 
-    private static void syncThemeChoices(SharedPreferences choices, File dir, File config) {
+    /**
+     * Notes which theme Home last saw. Earlier builds used this signature to delete on-TV choices
+     * on every theme push; choices now outrank the theme, so this only records the change.
+     */
+    private static void rememberThemeSignature(SharedPreferences choices, File dir, File config) {
         File revision = dir == null ? null : new File(dir, THEME_REVISION_NAME);
-        String token = revisionToken(revision);
-        String signature = fileStamp(config) + ":" + token;
-        String seen = choices.getString(THEME_SIGNATURE_KEY, null);
-        if (seen == null) {
-            // Existing preferences survive an app upgrade, unless the first launch follows an
-            // explicit theme push or reset by the updated tools.
-            SharedPreferences.Editor editor = choices.edit();
-            if (!"absent".equals(token)) editor.remove("columns").remove("animations")
-                    .remove("advanced_effects").remove(ROWS_BELOW_DOCK_KEY).remove(WALLPAPER_CHOICE_KEY)
-                    .remove(DOCK_OPACITY_KEY).remove(CLOCK_FORMAT_KEY);
-            editor.putString(THEME_SIGNATURE_KEY, signature).commit();
-        } else if (!seen.equals(signature)) {
-            choices.edit().remove("columns").remove("animations").remove("advanced_effects")
-                    .remove(ROWS_BELOW_DOCK_KEY).remove(WALLPAPER_CHOICE_KEY).remove(DOCK_OPACITY_KEY)
-                    .remove(CLOCK_FORMAT_KEY).putString(THEME_SIGNATURE_KEY, signature).commit();
+        String signature = fileStamp(config) + ":" + revisionToken(revision);
+        if (!signature.equals(choices.getString(THEME_SIGNATURE_KEY, null))) {
+            choices.edit().putString(THEME_SIGNATURE_KEY, signature).apply();
         }
     }
 

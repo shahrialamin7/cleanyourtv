@@ -57,14 +57,13 @@ The launcher's own page has these rows, top to bottom:
 - **Clock**: **System** follows the TV's 12- or 24-hour setting; **12-hour** or **24-hour** sets the launcher's
   clocks (Home and the clock screensaver) to that, whatever the TV uses (`clock_format` in a theme).
 - **Wallpaper**: one picture from the theme's collection (or its `wallpaper.jpg`), **None**, or **Theme
-  default**. A pick holds that picture and stops the rotation until you choose Theme default, press
-  Follow theme, or push the theme again.
+  default**. A pick holds that picture and stops the rotation until you choose Theme default or press
+  Follow theme.
 - **Animations** on or off, and **Advanced effects** (tile lift, icon zoom and smooth ambient-colour
   transitions; they may use more memory) once animations are on.
 - **Open on start**, only with `open_on_start_choice`: Off, or an app that opens instead of Home the first
   time Home comes up after the TV starts. Once per boot, so Home and Back still reach the launcher.
-- **Follow theme (reset on-TV choices)**, which clears every choice above. Pushing or resetting a theme
-  clears them too.
+- **Follow theme (reset on-TV choices)**, which clears every choice above. A theme push keeps them.
 - **Choose default home** opens Android's home picker, and **TV system settings** the TV's own settings
   page.
 
